@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Laboratorio interactivo para aprender Temporal.io con Java y Spring Boot">
+  <title>Temporal Lab — Java + Spring</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <header>
+    <div>
+      <span class="eyebrow">TEMPORAL.IO · JAVA SDK</span>
+      <h1>Temporal Lab</h1>
+    </div>
+    <div class="progress" aria-label="Progreso del curso">
+      <span id="progress-label">0 / 8 módulos</span>
+      <div class="progress-track"><div id="progress-bar"></div></div>
+    </div>
+  </header>
+
+  <main>
+    <aside aria-label="Módulos del curso">
+      <button class="lesson active"><span>01</span><strong>Modelo mental</strong><small>Workflow, Activity y Worker</small></button>
+      <button class="lesson" disabled><span>02</span><strong>Java SDK</strong><small>Primer workflow real</small></button>
+      <button class="lesson" disabled><span>03</span><strong>Spring Boot</strong><small>Starter y configuración</small></button>
+      <button class="lesson" disabled><span>04</span><strong>Determinismo</strong><small>Replay seguro</small></button>
+      <button class="lesson" disabled><span>05</span><strong>Resiliencia</strong><small>Retries y timeouts</small></button>
+      <button class="lesson" disabled><span>06</span><strong>Mensajes</strong><small>Signals, Queries, Updates</small></button>
+      <button class="lesson" disabled><span>07</span><strong>Testing</strong><small>JUnit y tiempo virtual</small></button>
+      <button class="lesson" disabled><span>08</span><strong>Producción</strong><small>Versionado y observabilidad</small></button>
+    </aside>
+
+    <section class="theory" aria-labelledby="lesson-title">
+      <p class="step">MÓDULO 01 · LECCIÓN 01</p>
+      <h2 id="lesson-title">Pensar en ejecución durable</h2>
+      <p class="lead">Temporal guarda el historial del proceso. Si tu Worker cae, otro continúa desde ese historial.</p>
+
+      <div class="flow" aria-label="Flujo entre cliente, Temporal y Worker">
+        <div><b>Spring API</b><small>inicia</small></div><i>→</i>
+        <div><b>Temporal</b><small>guarda estado</small></div><i>→</i>
+        <div><b>Worker</b><small>ejecuta</small></div>
+      </div>
+
+      <h3>Las tres piezas</h3>
+      <dl>
+        <div><dt>Workflow</dt><dd>Orquesta decisiones. Debe ser determinista. No hace HTTP, SQL ni usa el reloj del sistema.</dd></div>
+        <div><dt>Activity</dt><dd>Hace trabajo externo: REST, base de datos, correo. Puede reintentarse.</dd></div>
+        <div><dt>Worker</dt><dd>Proceso Java que escucha una Task Queue y ejecuta Workflows y Activities.</dd></div>
+      </dl>
+
+      <div class="spring-note">
+        <strong>Traducción desde Spring</strong>
+        <p>Un Workflow se parece a un servicio orquestador, pero tiene reglas de replay. Las Activities sí pueden delegar en repositorios y clientes HTTP.</p>
+      </div>
+
+      <h3>Tu ejercicio</h3>
+      <p>El código ya contiene un Workflow mínimo. Compílalo. Después rompe el <code>return</code>, observa el error y corrígelo.</p>
+    </section>
+
+    <section class="workspace" aria-label="Laboratorio Java">
+      <div class="toolbar">
+        <div><span class="dot"></span> PrimerWorkflow.java</div>
+        <div class="actions">
+          <button id="reset" class="secondary">Restaurar</button>
+          <button id="compile">Compilar <kbd>Ctrl↵</kbd></button>
+        </div>
+      </div>
+      <label class="sr-only" for="editor">Código Java del ejercicio</label>
+      <textarea id="editor" spellcheck="false" autocomplete="off"></textarea>
+      <div class="console" aria-live="polite">
+        <div class="console-title"><span>RESULTADO</span><span id="status">LISTO</span></div>
+        <pre id="output">Pulsa “Compilar” para verificar el ejercicio.</pre>
+      </div>
+    </section>
+  </main>
+
+  <script src="/app.js"></script>
+</body>
+</html>
